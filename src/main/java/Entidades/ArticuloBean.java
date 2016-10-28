@@ -11,6 +11,12 @@ package Entidades;
  */
 public class ArticuloBean {
     private String nombre;
+    private String precio;
+
+    public ArticuloBean(String nombre, String precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 
     /**
      * @return the nombre
@@ -24,6 +30,20 @@ public class ArticuloBean {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the precio
+     */
+    public String getPrecio() {
+        return precio;
+    }
+
+    /**
+     * @param precio the precio to set
+     */
+    public void setPrecio(String precio) {
+        this.precio = precio;
     }
 
 }

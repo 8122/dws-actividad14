@@ -24,7 +24,29 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "CarritoServlet", urlPatterns = {"/CarritoServlet"})
 public class CarritoServlet extends HttpServlet {
     
-    Hashtable<String, Number> carritoHT = new Hashtable();
+    Hashtable carritoHT;
+    int udArt1 = 0;
+    int udArt2 = 0;
+    int udArt3 = 0;
+    int udArt4 = 0;
+    int udArt5 = 0;
+    
+    
+    @Override
+    public void init(){
+        carritoHT = new Hashtable();
+        ArticuloBean art1 = new ArticuloBean("Camisa", "25");
+        ArticuloBean art2 = new ArticuloBean("Pantalon", "20");
+        ArticuloBean art3 = new ArticuloBean("Jersey", "30");
+        ArticuloBean art4 = new ArticuloBean("Zapatos", "45");
+        ArticuloBean art5 = new ArticuloBean("Chaqueta", "60");
+        
+        /*carritoHT.put("articulo1", art1);
+        carritoHT.put("articulo2", art2);
+        carritoHT.put("articulo3", art3);
+        carritoHT.put("articulo4", art4);
+        carritoHT.put("articulo5", art5);*/
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,20 +62,52 @@ public class CarritoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArticuloBean articulo = new ArticuloBean();
+            ArticuloBean articulo = new ArticuloBean("nom", "pre");
             articulo.setNombre(request.getParameter("nombre"));
             boolean existe = false;
+            
             Enumeration e = carritoHT.keys();
-            Object clave;
             while(e.hasMoreElements()){
-                clave = e.nextElement();
-                String nom = clave.toString();
-                if(articulo.getNombre().equals(nom)){
+                String clave = (String) e.nextElement();
+                ArticuloBean valor = (ArticuloBean) carritoHT.get(clave);
+                if(articulo.getNombre().equals(valor.getNombre())){
                     existe = true;
+                    switch(valor.getNombre()){
+                       case "Camisa":
+                           udArt1++;
+                           break;
+                        case "Pantalon":
+                           udArt2++;
+                           break;
+                        case "Jersey":
+                           udArt3++;
+                           break;
+                        case "Zapatos":
+                           udArt4++;
+                           break;
+                        case "Chaqueta":
+                           udArt5++;
+                   }
                 }
-                if(existe){
-                   
-            }
+                if(!existe){
+                   carritoHT.put(clave, valor);
+                   switch(valor.getNombre()){
+                       case "Camisa":
+                           udArt1++;
+                           break;
+                        case "Pantalon":
+                           udArt2++;
+                           break;
+                        case "Jersey":
+                           udArt3++;
+                           break;
+                        case "Zapatos":
+                           udArt4++;
+                           break;
+                        case "Chaqueta":
+                           udArt5++;
+                   }
+                }
             }
             
             RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/FinalizarCompra.java");
